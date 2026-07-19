@@ -20,8 +20,9 @@ app:
   upstream:
     enabled: true
     use-playwright: true
-    # Host open_ai_cursor_api (HTTP). Browser UI: http://46.174.75.130:8094/
-    # Forward host TCP 8094 to remote PC. Gateway itself listens on 127.0.0.1:18080 (local only).
+    # Host open_ai_cursor_api (HTTP). Playwright MUST open the host IP, never 127.0.0.1,
+    # when the gateway runs on a different machine (or when testing the remote path).
+    # Forward TCP 8094 to the host. Gateway itself listens on 127.0.0.1:18080 (local only).
     base-url: ${UPSTREAM_BASE_URL:http://46.174.75.130:8094}
     page-url: ${UPSTREAM_PAGE_URL:http://46.174.75.130:8094/}
     chat-path: /ui/run
@@ -34,7 +35,8 @@ app:
     cursor-cwd: ""
     session-resume: true
     session-idle-ms: 1800000
-    transport-key: ${TRANSPORT_KEY:}
+    # Must match open_ai_cursor_api TRANSPORT_KEY (override via env TRANSPORT_KEY)
+    transport-key: ${TRANSPORT_KEY:dev-shared-transport-key}
   dummy:
     sample-file: ${user.dir}/README.md
     workspace-root: ${COPILOT_REMOTE_WORKSPACE:}

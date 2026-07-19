@@ -48,9 +48,12 @@ Playwright Chromium is **not** in the project and is **never downloaded**. On th
 
 ```bash
 cd open_ai_api
+# TRANSPORT_KEY defaults to dev-shared-transport-key (must match host .env)
 set TRANSPORT_KEY=dev-shared-transport-key
 ./mvnw spring-boot:run
 ```
+
+If you see `Transport key is required when upstream is enabled`, set `TRANSPORT_KEY` (or rely on the yaml default above) and restart.
 
 Gateway listens on `http://127.0.0.1:18080`.
 

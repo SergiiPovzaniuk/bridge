@@ -156,8 +156,7 @@ public class UpstreamProxyService {
     public Map<String, Object> proxyUiReset() {
         try {
             @SuppressWarnings("unchecked")
-            Map<String, Object> body = restClient.post()
-                    .uri(url("/ui/reset"))
+            Map<String, Object> body = withTransportKey(restClient.post().uri(url("/ui/reset")))
                     .retrieve()
                     .body(Map.class);
             return body != null ? body : Map.of("status", "ok");
@@ -169,10 +168,10 @@ public class UpstreamProxyService {
     private JsonNode postChat(JsonNode body) {
         try {
             String sealed = payloadCrypto.seal(objectMapper.writeValueAsString(body));
-            var spec = restClient.post()
+            var spec = withTransportKey(restClient.post()
                     .uri(url(appProperties.getUpstream().getChatPath()))
                     .contentType(MediaType.TEXT_PLAIN)
-                    .body(sealed);
+                    .body(sealed));
             String apiKey = appProperties.getUpstream().getApiKey();
             if (apiKey != null && !apiKey.isBlank()) {
                 spec = spec.header("Authorization", "Bearer " + apiKey);
@@ -196,6 +195,14 @@ public class UpstreamProxyService {
         String base = appProperties.getUpstream().getBaseUrl().replaceAll("/$", "");
         String p = path.startsWith("/") ? path : "/" + path;
         return base + p;
+    }
+
+    private RestClient.RequestHeadersSpec<?> withTransportKey(RestClient.RequestHeadersSpec<?> spec) {
+        String key = appProperties.getUpstream().getTransportKey();
+        if (key != null && !key.isBlank()) {
+            return spec.header("x-transport-key", key);
+        }
+        return spec;
     }
 
     private ResponseStatusException upstreamError(RestClientResponseException ex) {
