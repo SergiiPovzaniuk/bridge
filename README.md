@@ -28,11 +28,23 @@ PORT=8081 node --env-file=.env dist/index.js
 
 **Remote PC** (gateway):
 
-Default upstream host is `https://46.174.75.130/`. Playwright Chromium is **not** in the project and is **never downloaded**. On the remote PC place it at:
+### Ports / firewall (two machines)
+
+| Where | Port | Bind | Purpose |
+|-------|------|------|---------|
+| **Host** (`open_ai_cursor_api`) | **8094** | `0.0.0.0` | Robot UI + `/ui/run` — **forward this port** to the host IP |
+| **Remote** (`open_ai_api`) | **18080** | `127.0.0.1` | Copilot / local clients only — **do not** need WAN forward |
+
+Browser UI (Playwright opens this): `http://46.174.75.130:8094/`  
+HTTP API base (health/models): `http://46.174.75.130:8094`
+
+Forward **TCP 8094** (host ← remote/router). Same `TRANSPORT_KEY` on both machines.
+
+Playwright Chromium is **not** in the project and is **never downloaded**. On the remote PC place it at:
 
 `C:\browser\ms-playwright\chromium-1148\chrome-win\`
 
-(`PLAYWRIGHT_BROWSERS_PATH` / `app.upstream.browsers-path` default: `C:\browser\ms-playwright`)
+(`app.upstream.browsers-path` default: `C:\browser\ms-playwright`)
 
 ```bash
 cd open_ai_api
@@ -40,9 +52,9 @@ set TRANSPORT_KEY=dev-shared-transport-key
 ./mvnw spring-boot:run
 ```
 
-Listens on `http://127.0.0.1:18080`.
+Gateway listens on `http://127.0.0.1:18080`.
 
-Env overrides: `UPSTREAM_BASE_URL`, `UPSTREAM_PAGE_URL` (defaults `https://46.174.75.130`), `UPSTREAM_HEADLESS`, `UPSTREAM_BROWSERS_PATH`, `TRANSPORT_KEY`. Local smoke: `UPSTREAM_BASE_URL=http://127.0.0.1:8094` and matching `UPSTREAM_PAGE_URL`. Concurrent chats return **429**. Streaming clients receive SSE `: keepalive` heartbeats while ACP runs.
+Env overrides: `UPSTREAM_BASE_URL`, `UPSTREAM_PAGE_URL` (defaults `http://46.174.75.130:8094`), `UPSTREAM_HEADLESS`, `UPSTREAM_BROWSERS_PATH`, `TRANSPORT_KEY`. Concurrent chats return **429**. Streaming clients receive SSE `: keepalive` heartbeats while ACP runs.
 
 ## Endpoints
 
@@ -59,8 +71,8 @@ Env overrides: `UPSTREAM_BASE_URL`, `UPSTREAM_PAGE_URL` (defaults `https://46.17
 | Key | Default | Description |
 |-----|---------|-------------|
 | `app.upstream.enabled` | `true` | Proxy to Cursor API |
-| `app.upstream.page-url` / `UPSTREAM_PAGE_URL` | `https://46.174.75.130/` | Browser UI for Playwright |
-| `app.upstream.base-url` / `UPSTREAM_BASE_URL` | `https://46.174.75.130` | Upstream HTTPS base |
+| `app.upstream.page-url` / `UPSTREAM_PAGE_URL` | `http://46.174.75.130:8094/` | Robot web UI Playwright opens |
+| `app.upstream.base-url` / `UPSTREAM_BASE_URL` | `http://46.174.75.130:8094` | Upstream HTTP base (health/models) |
 | `app.upstream.headless` / `UPSTREAM_HEADLESS` | `false` | Show Chromium window (set true for unattended) |
 | `app.upstream.browsers-path` / `UPSTREAM_BROWSERS_PATH` | `C:\browser\ms-playwright` | Playwright browsers root (must contain `chromium-1148\`); no runtime download |
 | `app.upstream.cursor-cwd` | empty | Unused (host is sandboxed) |

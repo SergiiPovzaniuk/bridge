@@ -20,8 +20,10 @@ app:
   upstream:
     enabled: true
     use-playwright: true
-    base-url: ${UPSTREAM_BASE_URL:https://46.174.75.130}
-    page-url: ${UPSTREAM_PAGE_URL:https://46.174.75.130/}
+    # Host open_ai_cursor_api (HTTP). Browser UI: http://46.174.75.130:8094/
+    # Forward host TCP 8094 to remote PC. Gateway itself listens on 127.0.0.1:18080 (local only).
+    base-url: ${UPSTREAM_BASE_URL:http://46.174.75.130:8094}
+    page-url: ${UPSTREAM_PAGE_URL:http://46.174.75.130:8094/}
     chat-path: /ui/run
     health-path: /health
     models-path: /v1/models

@@ -8,8 +8,8 @@ API contract: [VSCODE_COPILOT_API_SPEC.md](VSCODE_COPILOT_API_SPEC.md)
 
 | Machine | Runs | Role |
 |---------|------|------|
-| **Host PC** | `open_ai_cursor_api` behind `https://46.174.75.130/` | Cursor LLM proxy only (ask mode + temp sandbox; no project file edits) |
-| **Remote PC** | `open_ai_api` on port 18080 + VS Code Copilot | Playwright → host UI; **Agent tools edit remote workspace** |
+| **Host PC** | `open_ai_cursor_api` on **TCP 8094** (`http://46.174.75.130:8094/`) | Cursor LLM proxy; forward **8094** from remote |
+| **Remote PC** | `open_ai_api` on **127.0.0.1:18080** + VS Code Copilot | Playwright → host UI; Chromium at `C:\browser\ms-playwright` |
 
 **Host PC:**
 
@@ -18,7 +18,7 @@ cd open_ai_cursor_api
 PORT=8081 node --env-file=.env dist/index.js
 ```
 
-**Remote PC** — defaults already point at `https://46.174.75.130/` (`page-url` / `base-url`). Place Chromium at `C:\browser\ms-playwright\chromium-1148\chrome-win\` (app does not download browsers). Then:
+**Remote PC** — defaults: `page-url=http://46.174.75.130:8094/`, `base-url=http://46.174.75.130:8094`. Place Chromium at `C:\browser\ms-playwright\chromium-1148\chrome-win\`. Then:
 
 ```bash
 cd open_ai_api
@@ -75,7 +75,7 @@ Host Cursor API never creates/edits project files (temp sandbox only).
 
 | Key | Description |
 |-----|-------------|
-| `app.upstream.page-url` | Host Cursor API UI (default `https://46.174.75.130/`) |
+| `app.upstream.page-url` | Robot UI URL (default `http://46.174.75.130:8094/`) |
 | `app.upstream.session-resume` | Resume within one Copilot chat fingerprint |
 | `app.upstream.session-idle-ms` | Auto-clear idle sessions |
 
