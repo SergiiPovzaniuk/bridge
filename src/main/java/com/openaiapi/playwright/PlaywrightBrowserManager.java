@@ -7,8 +7,6 @@ import com.microsoft.playwright.Playwright;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -18,12 +16,13 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 @Component
 public class PlaywrightBrowserManager {
 
     private static final Logger log = LoggerFactory.getLogger(PlaywrightBrowserManager.class);
-    private static final String BUNDLED_BROWSERS_RESOURCE = "ms-playwright";
+    static final String DEFAULT_BROWSERS_PATH = "C:\\browser\\ms-playwright";
 
     private final AppProperties appProperties;
     private final Object lock = new Object();
@@ -105,56 +104,24 @@ public class PlaywrightBrowserManager {
 
     private Path resolveBrowsersPath() {
         String configured = appProperties.getUpstream().getBrowsersPath();
-        if (configured != null && !configured.isBlank()) {
-            Path path = Paths.get(configured.trim()).toAbsolutePath().normalize();
-            validateBrowsersPath(path);
-            return path;
-        }
-
-        Path fromSource = Paths.get(System.getProperty("user.dir"), "src", "main", "resources", BUNDLED_BROWSERS_RESOURCE)
+        Path path = Paths.get(StringUtils.hasText(configured) ? configured.trim() : DEFAULT_BROWSERS_PATH)
                 .toAbsolutePath()
                 .normalize();
-        if (Files.isDirectory(fromSource) && hasChromiumRevision(fromSource)) {
-            return fromSource;
-        }
-
-        Path fromClasspath = resolveClasspathBrowsersPath();
-        if (fromClasspath != null) {
-            validateBrowsersPath(fromClasspath);
-            return fromClasspath;
-        }
-
-        validateBrowsersPath(fromSource);
-        return fromSource;
-    }
-
-    private Path resolveClasspathBrowsersPath() {
-        URL resource = Thread.currentThread().getContextClassLoader().getResource(BUNDLED_BROWSERS_RESOURCE);
-        if (resource == null) {
-            return null;
-        }
-        if (!"file".equals(resource.getProtocol())) {
-            throw new BrowserNotReadyException(
-                    "Bundled Playwright browsers must be on the filesystem (exploded resources), not inside a JAR. "
-                            + "Set app.upstream.browsers-path to the ms-playwright directory.");
-        }
-        try {
-            return Paths.get(resource.toURI()).toAbsolutePath().normalize();
-        } catch (URISyntaxException ex) {
-            throw new BrowserNotReadyException("Invalid bundled Playwright browsers path", ex);
-        }
+        validateBrowsersPath(path);
+        return path;
     }
 
     private void validateBrowsersPath(Path path) {
         if (!Files.isDirectory(path)) {
             throw new BrowserNotReadyException(
                     "Playwright browsers not found at " + path
-                            + ". Run scripts/fetch-playwright-browsers.ps1 on a networked machine, then copy the folder to the remote PC.");
+                            + ". Place Chromium at C:\\browser\\ms-playwright\\chromium-1148\\chrome-win"
+                            + " (PLAYWRIGHT_BROWSERS_PATH = C:\\browser\\ms-playwright). Downloads are disabled.");
         }
         if (!hasChromiumRevision(path)) {
             throw new BrowserNotReadyException(
                     "No chromium-* revision under " + path
-                            + ". Run scripts/fetch-playwright-browsers.ps1 to install chromium into resources.");
+                            + ". Expected C:\\browser\\ms-playwright\\chromium-1148\\chrome-win. Downloads are disabled.");
         }
     }
 

@@ -28,12 +28,11 @@ PORT=8081 node --env-file=.env dist/index.js
 
 **Remote PC** (gateway):
 
-Default upstream host is `https://46.174.75.130/`. Chromium lives under `src/main/resources/ms-playwright/` (tracked in the repo); the app never downloads browsers (`PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1`). If that folder is missing, fetch once on a networked machine:
+Default upstream host is `https://46.174.75.130/`. Playwright Chromium is **not** in the project and is **never downloaded**. On the remote PC place it at:
 
-```powershell
-cd open_ai_api
-.\scripts\fetch-playwright-browsers.ps1
-```
+`C:\browser\ms-playwright\chromium-1148\chrome-win\`
+
+(`PLAYWRIGHT_BROWSERS_PATH` / `app.upstream.browsers-path` default: `C:\browser\ms-playwright`)
 
 ```bash
 cd open_ai_api
@@ -41,7 +40,7 @@ set TRANSPORT_KEY=dev-shared-transport-key
 ./mvnw spring-boot:run
 ```
 
-Listens on `http://127.0.0.1:18080`. Prefer IntelliJ / `./mvnw spring-boot:run` with exploded resources. Fat JAR alone cannot run Chromium from inside the archive — set `UPSTREAM_BROWSERS_PATH` to the `ms-playwright` folder.
+Listens on `http://127.0.0.1:18080`.
 
 Env overrides: `UPSTREAM_BASE_URL`, `UPSTREAM_PAGE_URL` (defaults `https://46.174.75.130`), `UPSTREAM_HEADLESS`, `UPSTREAM_BROWSERS_PATH`, `TRANSPORT_KEY`. Local smoke: `UPSTREAM_BASE_URL=http://127.0.0.1:8094` and matching `UPSTREAM_PAGE_URL`. Concurrent chats return **429**. Streaming clients receive SSE `: keepalive` heartbeats while ACP runs.
 
@@ -63,7 +62,7 @@ Env overrides: `UPSTREAM_BASE_URL`, `UPSTREAM_PAGE_URL` (defaults `https://46.17
 | `app.upstream.page-url` / `UPSTREAM_PAGE_URL` | `https://46.174.75.130/` | Browser UI for Playwright |
 | `app.upstream.base-url` / `UPSTREAM_BASE_URL` | `https://46.174.75.130` | Upstream HTTPS base |
 | `app.upstream.headless` / `UPSTREAM_HEADLESS` | `false` | Show Chromium window (set true for unattended) |
-| `app.upstream.browsers-path` | empty | Optional absolute Playwright browsers cache; default is bundled `src/main/resources/ms-playwright` (no runtime download) |
+| `app.upstream.browsers-path` / `UPSTREAM_BROWSERS_PATH` | `C:\browser\ms-playwright` | Playwright browsers root (must contain `chromium-1148\`); no runtime download |
 | `app.upstream.cursor-cwd` | empty | Unused (host is sandboxed) |
 | `app.upstream.session-resume` | `true` | Resume within one Copilot chat fingerprint |
 | `app.upstream.response-timeout-ms` | `600000` | Upstream/ACP wait timeout (10 min) |

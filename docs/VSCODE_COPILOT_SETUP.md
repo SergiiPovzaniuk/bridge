@@ -18,7 +18,7 @@ cd open_ai_cursor_api
 PORT=8081 node --env-file=.env dist/index.js
 ```
 
-**Remote PC** — defaults already point at `https://46.174.75.130/` (`page-url` / `base-url`). Chromium must exist under `src/main/resources/ms-playwright/` (app does not download it). Then:
+**Remote PC** — defaults already point at `https://46.174.75.130/` (`page-url` / `base-url`). Place Chromium at `C:\browser\ms-playwright\chromium-1148\chrome-win\` (app does not download browsers). Then:
 
 ```bash
 cd open_ai_api

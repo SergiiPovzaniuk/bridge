@@ -158,7 +158,7 @@ public class AppProperties {
         private String modelsPath = "/v1/models";
         private String apiKey = "";
         private boolean headless = false;
-        private String browsersPath = "";
+        private String browsersPath = "C:\\browser\\ms-playwright";
         private int responseTimeoutMs = 600000;
         private String cursorCwd = "";
         private boolean sessionResume = true;

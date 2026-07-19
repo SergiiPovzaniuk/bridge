@@ -27,7 +27,7 @@ app:
     models-path: /v1/models
     api-key: ""
     headless: ${UPSTREAM_HEADLESS:false}
-    browsers-path: ${UPSTREAM_BROWSERS_PATH:}
+    browsers-path: ${UPSTREAM_BROWSERS_PATH:C:\\browser\\ms-playwright}
     response-timeout-ms: 600000
     cursor-cwd: ""
     session-resume: true
