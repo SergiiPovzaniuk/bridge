@@ -1,3 +1,5 @@
+# Offline prep only: install Chromium into src/main/resources/ms-playwright.
+# open_ai_api never downloads browsers at runtime (PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1).
 $ErrorActionPreference = "Stop"
 $root = Split-Path -Parent $PSScriptRoot
 $browsersPath = Join-Path $root "src\main\resources\ms-playwright"

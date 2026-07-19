@@ -85,11 +85,11 @@ public class PlaywrightBrowserManager {
         try {
             if (playwright == null) {
                 Path browsersPath = resolveBrowsersPath();
-                Map<String, String> env = new HashMap<>();
+                Map<String, String> env = new HashMap<>(System.getenv());
                 env.put("PLAYWRIGHT_BROWSERS_PATH", browsersPath.toAbsolutePath().toString());
                 env.put("PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD", "1");
                 playwright = Playwright.create(new Playwright.CreateOptions().setEnv(env));
-                log.info("Playwright using browsers at {}", browsersPath);
+                log.info("Playwright using browsers at {} (download disabled)", browsersPath);
             }
             var options = new BrowserType.LaunchOptions()
                     .setHeadless(appProperties.getUpstream().isHeadless());

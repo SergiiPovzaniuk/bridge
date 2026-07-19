@@ -20,8 +20,8 @@ app:
   upstream:
     enabled: true
     use-playwright: true
-    base-url: ${UPSTREAM_BASE_URL:http://127.0.0.1:8094}
-    page-url: ${UPSTREAM_PAGE_URL:http://127.0.0.1:8094/}
+    base-url: ${UPSTREAM_BASE_URL:https://46.174.75.130}
+    page-url: ${UPSTREAM_PAGE_URL:https://46.174.75.130/}
     chat-path: /ui/run
     health-path: /health
     models-path: /v1/models

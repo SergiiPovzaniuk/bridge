@@ -128,7 +128,7 @@ public class PlaywrightBrowserSession {
         }
         closeContext();
         Browser browser = browserManager.getBrowser();
-        context = browser.newContext();
+        context = browser.newContext(new Browser.NewContextOptions().setIgnoreHTTPSErrors(true));
         page = context.newPage();
         int timeoutMs = Math.max(60_000, appProperties.getUpstream().getResponseTimeoutMs());
         page.setDefaultTimeout(timeoutMs);

@@ -8,7 +8,7 @@ API contract: [VSCODE_COPILOT_API_SPEC.md](VSCODE_COPILOT_API_SPEC.md)
 
 | Machine | Runs | Role |
 |---------|------|------|
-| **Host PC** | `open_ai_cursor_api` on port 8081 | Cursor LLM proxy only (ask mode + temp sandbox; no project file edits) |
+| **Host PC** | `open_ai_cursor_api` behind `https://46.174.75.130/` | Cursor LLM proxy only (ask mode + temp sandbox; no project file edits) |
 | **Remote PC** | `open_ai_api` on port 18080 + VS Code Copilot | Playwright → host UI; **Agent tools edit remote workspace** |
 
 **Host PC:**
@@ -18,10 +18,11 @@ cd open_ai_cursor_api
 PORT=8081 node --env-file=.env dist/index.js
 ```
 
-**Remote PC** — set `app.upstream.page-url` to `http://<host-ip>:8081/` in `application.yml`, then:
+**Remote PC** — defaults already point at `https://46.174.75.130/` (`page-url` / `base-url`). Chromium must exist under `src/main/resources/ms-playwright/` (app does not download it). Then:
 
 ```bash
 cd open_ai_api
+set TRANSPORT_KEY=dev-shared-transport-key
 ./mvnw spring-boot:run
 ```
 
@@ -74,7 +75,7 @@ Host Cursor API never creates/edits project files (temp sandbox only).
 
 | Key | Description |
 |-----|-------------|
-| `app.upstream.page-url` | Host Cursor API UI (browser-reachable) |
+| `app.upstream.page-url` | Host Cursor API UI (default `https://46.174.75.130/`) |
 | `app.upstream.session-resume` | Resume within one Copilot chat fingerprint |
 | `app.upstream.session-idle-ms` | Auto-clear idle sessions |
 

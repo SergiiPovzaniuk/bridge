@@ -151,8 +151,8 @@ public class AppProperties {
     public static class Upstream {
         private boolean enabled = true;
         private boolean usePlaywright = true;
-        private String baseUrl = "http://127.0.0.1:8081";
-        private String pageUrl = "http://127.0.0.1:8081/";
+        private String baseUrl = "https://46.174.75.130";
+        private String pageUrl = "https://46.174.75.130/";
         private String chatPath = "/ui/run";
         private String healthPath = "/health";
         private String modelsPath = "/v1/models";
