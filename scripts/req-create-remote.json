@@ -1,0 +1,25 @@
+{
+  "model": "auto",
+  "messages": [
+    {"role": "system", "content": "Open file: C:\\Users\\sergi\\projects\\open_ai\\open_ai_api\\README.md"},
+    {"role": "user", "content": "Create a new file remote-agent-test.txt with content hello-remote"}
+  ],
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "create_file",
+        "description": "Create a file",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "filePath": {"type": "string"},
+            "content": {"type": "string"}
+          },
+          "required": ["filePath", "content"]
+        }
+      }
+    }
+  ],
+  "tool_choice": "auto"
+}

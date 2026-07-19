@@ -1,0 +1,8 @@
+app:
+  upstream:
+    enabled: false
+    use-playwright: false
+    headless: true
+    transport-key: test-transport-key
+  llm:
+    enabled: false

@@ -1,0 +1,53 @@
+server:
+  address: 127.0.0.1
+  port: 18080
+  tomcat:
+    max-http-form-post-size: 104857600
+    max-swallow-size: 104857600
+    connection-timeout: 600000
+
+spring:
+  codec:
+    max-in-memory-size: 100MB
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+app:
+  auth:
+    enabled: false
+  upstream:
+    enabled: true
+    use-playwright: true
+    base-url: ${UPSTREAM_BASE_URL:http://127.0.0.1:8094}
+    page-url: ${UPSTREAM_PAGE_URL:http://127.0.0.1:8094/}
+    chat-path: /ui/run
+    health-path: /health
+    models-path: /v1/models
+    api-key: ""
+    headless: ${UPSTREAM_HEADLESS:false}
+    browsers-path: ${UPSTREAM_BROWSERS_PATH:}
+    response-timeout-ms: 600000
+    cursor-cwd: ""
+    session-resume: true
+    session-idle-ms: 1800000
+    transport-key: ${TRANSPORT_KEY:}
+  dummy:
+    sample-file: ${user.dir}/README.md
+    workspace-root: ${COPILOT_REMOTE_WORKSPACE:}
+  llm:
+    enabled: ${COPILOT_LLM_ENABLED:false}
+    base-url: ${COPILOT_LLM_BASE_URL:https://api.openai.com}
+    chat-path: /v1/chat/completions
+    api-key: ${COPILOT_LLM_API_KEY:}
+    model: ${COPILOT_LLM_MODEL:}
+  models:
+    - id: dummy-gpt
+      name: Dummy GPT
+    - id: dummy-fast
+      name: Dummy Fast
+    - id: dummy-tools
+      name: Dummy Tools
+  future:
+    vscode-bridge-url: http://127.0.0.1:3030
