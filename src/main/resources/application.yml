@@ -1,0 +1,24 @@
+server:
+  address: 127.0.0.1
+  port: 18080
+  tomcat:
+    max-http-form-post-size: 104857600
+    max-swallow-size: 104857600
+    connection-timeout: 600000
+    keep-alive-timeout: 600000
+
+spring:
+  mvc:
+    async:
+      request-timeout: 600000
+  codec:
+    max-in-memory-size: 100MB
+
+app:
+  relay:
+    bridge-url: ${BRIDGE_URL:https://info.iba-expert.uk/}
+    relay-token: ${RELAY_TOKEN:urA9PCkzTLSm6oXvnyRBwhhhVKMufAc9a1gZeo9tkU}
+    bearer-token: ${BEARER_TOKEN:vNjo6ZDNQamYb2w98solftTvzoyM1vdZM5dQLIyhi4}
+    headless: ${RELAY_HEADLESS:false}
+    browsers-path: ${PLAYWRIGHT_BROWSERS_PATH:ms-playwright}
+    response-timeout-ms: 300000
