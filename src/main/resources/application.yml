@@ -20,5 +20,5 @@ app:
     relay-token: ${RELAY_TOKEN:urA9PCkzTLSm6oXvnyRBwhhhVKMufAc9a1gZeo9tkU}
     bearer-token: ${BEARER_TOKEN:vNjo6ZDNQamYb2w98solftTvzoyM1vdZM5dQLIyhi4}
     headless: ${RELAY_HEADLESS:false}
-    browsers-path: ${PLAYWRIGHT_BROWSERS_PATH:ms-playwright}
+    browsers-path: ${PLAYWRIGHT_BROWSERS_PATH:}
     response-timeout-ms: 300000
