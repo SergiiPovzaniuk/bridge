@@ -77,16 +77,19 @@ public class RelayBrowserSession {
     }
 
     private void openPage() {
+        String connId = java.util.UUID.randomUUID().toString();
         page = browser.newPage();
         page.exposeBinding("javaPush", (source, args) -> {
             String raw = String.valueOf(args[0]);
             dispatch.submit(() -> onInboundRaw(raw));
             return null;
         });
-        page.addInitScript("window.__cursorToken = " + mapper.valueToTree(props.getRelayToken()).toString() + ";");
+        page.addInitScript(
+                "window.__cursorToken = " + mapper.valueToTree(props.getRelayToken()).toString() + ";"
+                        + "window.__cursorConnId = " + mapper.valueToTree(connId).toString() + ";");
         page.navigate(props.getBridgeUrl());
         ready.set(true);
-        log.info("relay browser page ready at {}", props.getBridgeUrl());
+        log.info("relay browser page ready at {} (conn {})", props.getBridgeUrl(), connId);
     }
 
     private void onInboundRaw(String raw) {
@@ -161,10 +164,22 @@ public class RelayBrowserSession {
     @Scheduled(fixedDelay = 15000, initialDelay = 15000)
     public void healthCheck() {
         pwThread.submit(() -> {
-            boolean closed = page == null || page.isClosed();
-            if (closed && playwright != null) {
+            boolean browserDead = browser == null || !browser.isConnected();
+            boolean pageClosed = page == null || page.isClosed();
+            if (!browserDead && !pageClosed) {
+                return;
+            }
+            ready.set(false);
+            if (browserDead) {
+                log.warn("relay browser disconnected, relaunching from scratch");
+                closeQuietly();
+                try {
+                    launchOnPwThread();
+                } catch (Exception e) {
+                    log.error("failed to relaunch relay browser", e);
+                }
+            } else {
                 log.warn("relay page closed, reopening");
-                ready.set(false);
                 try {
                     openPage();
                 } catch (Exception e) {
@@ -172,6 +187,20 @@ public class RelayBrowserSession {
                 }
             }
         });
+    }
+
+    private void closeQuietly() {
+        try {
+            if (browser != null) browser.close();
+        } catch (Exception ignored) {
+        }
+        try {
+            if (playwright != null) playwright.close();
+        } catch (Exception ignored) {
+        }
+        browser = null;
+        playwright = null;
+        page = null;
     }
 
     @PreDestroy
