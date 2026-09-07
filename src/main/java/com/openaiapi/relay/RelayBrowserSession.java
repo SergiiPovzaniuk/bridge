@@ -38,7 +38,14 @@ public class RelayBrowserSession {
     private final Map<String, String[]> chunkBuffers = new ConcurrentHashMap<>();
     private final AtomicBoolean ready = new AtomicBoolean(false);
     private final AtomicBoolean pokeInFlight = new AtomicBoolean(false);
-    private final ExecutorService dispatch = Executors.newVirtualThreadPerTaskExecutor();
+    // Must be single-threaded FIFO: a poll response can batch several frames for the
+    // same stream, and a concurrent/unordered executor here would let their delta
+    // chunks race and interleave before reaching the SSE writer, corrupting output.
+    private final ExecutorService dispatch = Executors.newSingleThreadExecutor(r -> {
+        Thread t = new Thread(r, "relay-dispatch");
+        t.setDaemon(true);
+        return t;
+    });
 
     private Playwright playwright;
     private Browser browser;
