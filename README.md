@@ -2,14 +2,14 @@
 
 Spring Boot app for the **remote PC**. Exposes a real OpenAI-compatible API to
 VS Code Continue, and gets all model output from a headless Chromium tab that
-holds a WebSocket connection to the Python host (`cursor_openai_bridge`) on
+uses HTTP long-polling with the Python host (`cursor_openai_bridge`) on
 your main PC. This app has **zero protocol knowledge** — it forwards JSON
 frames both ways and never touches the DOM.
 
 ```
 VS Code Continue  --OpenAI SSE-->  open_ai_api :18080  --page.evaluate-->  Chromium (headless)
                                          ^                                      |
-                                         |                                      | wss /relay
+                                         |                                      | HTTP /relay/poll + /relay/send
                                          +---------- exposeBinding push --------+
                                                                                  v
                                                                     cursor_openai_bridge :8787
@@ -40,7 +40,7 @@ present under `%LOCALAPPDATA%\ms-playwright` (Windows) / `~/.cache/ms-playwright
 java -jar target\open-ai-api-0.0.1-SNAPSHOT.jar
 ```
 
-No env vars needed — `bridge-url`/`relay-token`/`bearer-token`/`headless` are hardcoded in `application.yml`, and the jar sets `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1` on itself at startup (via a small reflection call in `OpenAiApiApplication.main`, backed by an `Add-Opens` manifest entry baked into the jar by `maven-jar-plugin` — no `--add-opens` flag or launcher script required), so a Chromium already installed by step 1 is reused as-is with zero re-download checks. This is required on machines where only the jar itself can be launched directly (no shell scripts, no manual env vars). Override any hardcoded value per-run if you ever need to:
+Set `RELAY_TOKEN` to the host's token before starting. The jar sets `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1` at startup, so an installed Chromium is reused without download checks:
 
 ```bash
 set BRIDGE_URL=http://<your-main-pc-ip>:8787/
@@ -56,7 +56,7 @@ Or via `application.yml` / any Spring env source — see `app.relay.*` in
 |---|---|---|---|
 | `app.relay.bridge-url` | `BRIDGE_URL` | `http://127.0.0.1:8787/` | URL of the Python host's robot page |
 | `app.relay.relay-token` | `RELAY_TOKEN` | empty | Shared secret for the `/relay` WebSocket (must match host `.env`) |
-| `app.relay.bearer-token` | `BEARER_TOKEN` | empty | Token Continue must send as `Authorization: Bearer ...` |
+| `app.relay.bearer-token` | `BEARER_TOKEN` | `continue-local` | Token Continue must send as `Authorization: Bearer ...` |
 | `app.relay.headless` | `RELAY_HEADLESS` | `true` | Run Chromium headless |
 | `app.relay.browsers-path` | `PLAYWRIGHT_BROWSERS_PATH` | system default | Custom Playwright browser cache dir |
 | `app.relay.response-timeout-ms` | — | `300000` | Max wait for a single relay round trip |
@@ -78,12 +78,20 @@ models:
     apiBase: http://127.0.0.1:18080/v1
     apiKey: <BEARER_TOKEN>
     roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
   - name: Cursor Plan
     provider: openai
     model: composer-2.5:plan
     apiBase: http://127.0.0.1:18080/v1
     apiKey: <BEARER_TOKEN>
     roles: [chat]
+    capabilities: [tool_use]
   - name: Cursor Ask
     provider: openai
     model: composer-2.5:ask
@@ -95,6 +103,9 @@ models:
 Mode is chosen by the `:ask` / `:plan` / `:agent` model-id suffix, or the
 tools Continue sends. `GET /v1/models` lists every Cursor model with all
 three suffixes, so any of them can be picked in Continue's model dropdown.
+Set `X-Continue-Workspace` to the folder opened on the restricted PC. These
+headers make the client workspace, OS, and shell authoritative; never set a
+static `X-Conversation-Id`, because that would merge separate Continue chats.
 
 **Autocomplete and embeddings are not served here** — the Cursor SDK is an
 agent SDK, not a completion/embedding API. Configure separate `autocomplete`
@@ -106,7 +117,7 @@ or another provider you already use).
 - Set both `RELAY_TOKEN` (host↔relay) and `BEARER_TOKEN` (Continue↔relay) to
   long random values — never leave them blank outside of local dev.
 - Put TLS in front of both hops once they cross a network boundary: terminate
-  `wss://` for the host's `/relay` endpoint and `https://` for the relay's
+  `https://` for the host's `/relay/*` endpoints and for the relay's
   `:18080`, e.g. with a reverse proxy (Caddy/nginx) or a self-signed cert.
 - Firewall: only the Python host's port (`8787`) needs to be reachable from
   the remote PC; the Java relay's port (`18080`) only needs to be reachable
@@ -132,7 +143,7 @@ This replaces **both**:
   and talks to Cursor directly via `cursor-sdk`, no subprocess CLI involved.
 - The old `data-testid`-driven robot page and DOM-polling `RelayBrowserSession`
   — replaced by `cursor_openai_bridge/static/robot.html`, a zero-DOM-state
-  WebSocket relay pushed to Java via `page.exposeBinding`.
+  HTTP relay pushed to Java via `page.exposeBinding`.
 
 Once the new stack is verified end-to-end, stop `open_ai_cursor_api` and
 remove its scheduled tasks/services; nothing in this repo calls it anymore.

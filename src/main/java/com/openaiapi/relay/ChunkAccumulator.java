@@ -2,6 +2,7 @@ package com.openaiapi.relay;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /** Merges a sequence of OpenAI chat.completion.chunk objects into one chat.completion body. */
@@ -9,7 +10,7 @@ public class ChunkAccumulator {
 
     private final ObjectMapper mapper;
     private final StringBuilder content = new StringBuilder();
-    private JsonNode toolCalls;
+    private final ArrayNode toolCalls;
     private JsonNode usage;
     private String finishReason = "stop";
     private String id;
@@ -19,6 +20,7 @@ public class ChunkAccumulator {
 
     public ChunkAccumulator(ObjectMapper mapper) {
         this.mapper = mapper;
+        this.toolCalls = mapper.createArrayNode();
     }
 
     public void add(JsonNode chunk) {
@@ -35,7 +37,7 @@ public class ChunkAccumulator {
             content.append(delta.get("content").asText());
         }
         if (delta.has("tool_calls")) {
-            toolCalls = delta.get("tool_calls");
+            mergeToolCalls(delta.get("tool_calls"));
         }
         if (!choice.path("finish_reason").isMissingNode() && !choice.path("finish_reason").isNull()) {
             finishReason = choice.get("finish_reason").asText();
@@ -54,7 +56,7 @@ public class ChunkAccumulator {
         root.put("model", model);
         ObjectNode message = mapper.createObjectNode();
         message.put("role", "assistant");
-        if (toolCalls != null) {
+        if (!toolCalls.isEmpty()) {
             message.putNull("content");
             message.set("tool_calls", toolCalls);
         } else {
@@ -67,5 +69,36 @@ public class ChunkAccumulator {
         root.set("choices", mapper.createArrayNode().add(choice));
         root.set("usage", usage == null ? mapper.nullNode() : usage);
         return root;
+    }
+
+    private void mergeToolCalls(JsonNode calls) {
+        int position = 0;
+        for (JsonNode call : calls) {
+            int index = call.path("index").asInt(position++);
+            while (toolCalls.size() <= index) {
+                toolCalls.addObject();
+            }
+            ObjectNode target = (ObjectNode) toolCalls.get(index);
+            if (call.hasNonNull("id")) {
+                target.put("id", call.get("id").asText());
+            }
+            if (call.hasNonNull("type")) {
+                target.put("type", call.get("type").asText());
+            }
+            JsonNode function = call.path("function");
+            if (!function.isMissingNode()) {
+                ObjectNode targetFunction = target.has("function")
+                        ? (ObjectNode) target.get("function")
+                        : target.putObject("function");
+                append(targetFunction, "name", function.path("name").asText(""));
+                append(targetFunction, "arguments", function.path("arguments").asText(""));
+            }
+        }
+    }
+
+    private void append(ObjectNode node, String field, String fragment) {
+        if (!fragment.isEmpty()) {
+            node.put(field, node.path(field).asText("") + fragment);
+        }
     }
 }

@@ -17,8 +17,8 @@ spring:
 app:
   relay:
     bridge-url: ${BRIDGE_URL:https://info.iba-expert.uk/}
-    relay-token: ${RELAY_TOKEN:urA9PCkzTLSm6oXvnyRBwhhhVKMufAc9a1gZeo9tkU}
-    bearer-token: ${BEARER_TOKEN:vNjo6ZDNQamYb2w98solftTvzoyM1vdZM5dQLIyhi4}
+    relay-token: ${RELAY_TOKEN:}
+    bearer-token: ${BEARER_TOKEN:continue-local}
     headless: ${RELAY_HEADLESS:false}
     browsers-path: ${PLAYWRIGHT_BROWSERS_PATH:}
     response-timeout-ms: 300000

@@ -1,9 +1,0 @@
-target/
-.git/
-.idea/
-*.iml
-.env
-captures/
-docs/
-**/.DS_Store
-*.log

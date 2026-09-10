@@ -76,7 +76,12 @@ public class RelayBrowserSession {
                 env.put("PLAYWRIGHT_BROWSERS_PATH", props.getBrowsersPath());
             }
             playwright = Playwright.create(new Playwright.CreateOptions().setEnv(env));
-            browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(props.isHeadless()));
+            // Chromium's own OS-level sandbox can fail to initialize under restricted
+            // accounts (locked-down remote machines, IDE-launched JVMs, RDP sessions,
+            // no writable /dev/shm) -- disable it rather than let launch() throw.
+            browser = playwright.chromium().launch(new BrowserType.LaunchOptions()
+                    .setHeadless(props.isHeadless())
+                    .setArgs(java.util.List.of("--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage")));
             openPage();
         } catch (Exception e) {
             log.error("failed to launch relay browser", e);

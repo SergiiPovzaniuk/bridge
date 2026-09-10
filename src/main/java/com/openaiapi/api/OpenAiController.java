@@ -28,7 +28,9 @@ import org.springframework.http.HttpStatus;
 public class OpenAiController {
 
     private static final Object POISON = new Object();
-    private static final String[] FORWARD_HEADERS = {"x-conversation-id", "x-cursor-mode"};
+    private static final String[] FORWARD_HEADERS = {
+            "x-conversation-id", "x-cursor-mode", "x-continue-workspace", "x-continue-os", "x-continue-shell"
+    };
 
     private final RelayChannel channel;
     private final RelayProperties props;
@@ -197,7 +199,7 @@ public class OpenAiController {
         return body;
     }
 
-    private Map<String, String> forwardedHeaders(HttpServletRequest req) {
+    Map<String, String> forwardedHeaders(HttpServletRequest req) {
         Map<String, String> out = new LinkedHashMap<>();
         for (String h : FORWARD_HEADERS) {
             String v = req.getHeader(h);
