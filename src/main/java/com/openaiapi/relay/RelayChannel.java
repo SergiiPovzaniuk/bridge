@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-/** Multiplexes many concurrent chat streams over the single browser-relay WebSocket. */
+/** Multiplexes concurrent chat streams over browser-mediated HTTP long polling. */
 @Component
 public class RelayChannel {
 

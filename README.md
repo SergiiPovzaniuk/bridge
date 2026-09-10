@@ -1,13 +1,13 @@
 # Java relay (thin, dumb byte relay)
 
 Spring Boot app for the **remote PC**. Exposes a real OpenAI-compatible API to
-VS Code Continue, and gets all model output from a headless Chromium tab that
+VS Code Continue, and gets all model output from a visible Chromium tab that
 uses HTTP long-polling with the Python host (`cursor_openai_bridge`) on
 your main PC. This app has **zero protocol knowledge** — it forwards JSON
 frames both ways and never touches the DOM.
 
 ```
-VS Code Continue  --OpenAI SSE-->  open_ai_api :18080  --page.evaluate-->  Chromium (headless)
+VS Code Continue  --local OpenAI HTTP-->  open_ai_api :18080  --page.evaluate-->  Chromium
                                          ^                                      |
                                          |                                      | HTTP /relay/poll + /relay/send
                                          +---------- exposeBinding push --------+
