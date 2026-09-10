@@ -2,8 +2,8 @@ server:
   address: 127.0.0.1
   port: 18080
   tomcat:
-    max-http-form-post-size: 104857600
-    max-swallow-size: 104857600
+    max-http-form-post-size: 4194304
+    max-swallow-size: 4194304
     connection-timeout: 600000
     keep-alive-timeout: 600000
 
@@ -12,13 +12,14 @@ spring:
     async:
       request-timeout: 600000
   codec:
-    max-in-memory-size: 100MB
+    max-in-memory-size: 4MB
 
 app:
   relay:
-    bridge-url: ${BRIDGE_URL:https://info.iba-expert.uk/}
+    bridge-url: ${BRIDGE_URL:http://127.0.0.1:8787/}
     relay-token: ${RELAY_TOKEN:}
     bearer-token: ${BEARER_TOKEN:continue-local}
     headless: ${RELAY_HEADLESS:false}
     browsers-path: ${PLAYWRIGHT_BROWSERS_PATH:}
+    browser-executable-path: ${BROWSER_EXECUTABLE_PATH:}
     response-timeout-ms: 300000

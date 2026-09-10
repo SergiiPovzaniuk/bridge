@@ -1,18 +1,27 @@
 package com.openaiapi.config;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.validation.annotation.Validated;
 
+@Validated
 @ConfigurationProperties(prefix = "app.relay")
 public class RelayProperties {
 
     /** Base URL of the Python cursor-openai-bridge; Chromium navigates here to load robot.html. */
+    @NotBlank
     private String bridgeUrl = "http://127.0.0.1:8787/";
     /** Must match the bridge's RELAY_TOKEN. */
+    @NotBlank
     private String relayToken = "";
     /** Bearer token required from local Continue clients hitting this Java gateway. */
+    @NotBlank
     private String bearerToken = "";
-    private boolean headless = true;
+    private boolean headless = false;
     private String browsersPath = "";
+    private String browserExecutablePath = "";
+    @Min(1000)
     private long responseTimeoutMs = 300_000;
 
     public String getBridgeUrl() {
@@ -53,6 +62,14 @@ public class RelayProperties {
 
     public void setBrowsersPath(String browsersPath) {
         this.browsersPath = browsersPath;
+    }
+
+    public String getBrowserExecutablePath() {
+        return browserExecutablePath;
+    }
+
+    public void setBrowserExecutablePath(String browserExecutablePath) {
+        this.browserExecutablePath = browserExecutablePath;
     }
 
     public long getResponseTimeoutMs() {

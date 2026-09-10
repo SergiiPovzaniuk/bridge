@@ -1,0 +1,2032 @@
+name: Cursor Bridge - All Models
+version: 1.0.0
+schema: v1
+models:
+  - name: 'Cursor default'
+    provider: openai
+    model: 'default'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor grok-4.6'
+    provider: openai
+    model: 'grok-4.6'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor composer-2.5'
+    provider: openai
+    model: 'composer-2.5'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-opus-5'
+    provider: openai
+    model: 'claude-opus-5'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-opus-4-8'
+    provider: openai
+    model: 'claude-opus-4-8'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5.6-sol'
+    provider: openai
+    model: 'gpt-5.6-sol'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5.5'
+    provider: openai
+    model: 'gpt-5.5'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-fable-5-1'
+    provider: openai
+    model: 'claude-fable-5-1'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-fable-5'
+    provider: openai
+    model: 'claude-fable-5'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor grok-4.5'
+    provider: openai
+    model: 'grok-4.5'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gemini-3.8-flash'
+    provider: openai
+    model: 'gemini-3.8-flash'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gemini-3.7-flash'
+    provider: openai
+    model: 'gemini-3.7-flash'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor muse-spark-1.3'
+    provider: openai
+    model: 'muse-spark-1.3'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5.6-terra'
+    provider: openai
+    model: 'gpt-5.6-terra'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-sonnet-5'
+    provider: openai
+    model: 'claude-sonnet-5'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-sonnet-4-6'
+    provider: openai
+    model: 'claude-sonnet-4-6'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor composer-2'
+    provider: openai
+    model: 'composer-2'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5.3-codex'
+    provider: openai
+    model: 'gpt-5.3-codex'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-opus-4-7'
+    provider: openai
+    model: 'claude-opus-4-7'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5.4'
+    provider: openai
+    model: 'gpt-5.4'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-opus-4-6'
+    provider: openai
+    model: 'claude-opus-4-6'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-opus-4-5'
+    provider: openai
+    model: 'claude-opus-4-5'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5.2'
+    provider: openai
+    model: 'gpt-5.2'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5.6-luna'
+    provider: openai
+    model: 'gpt-5.6-luna'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gemini-3.6-flash'
+    provider: openai
+    model: 'gemini-3.6-flash'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gemini-3.1-pro'
+    provider: openai
+    model: 'gemini-3.1-pro'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5.4-mini'
+    provider: openai
+    model: 'gpt-5.4-mini'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5.4-nano'
+    provider: openai
+    model: 'gpt-5.4-nano'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-haiku-4-5'
+    provider: openai
+    model: 'claude-haiku-4-5'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-sonnet-4-5'
+    provider: openai
+    model: 'claude-sonnet-4-5'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5.1'
+    provider: openai
+    model: 'gpt-5.1'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gemini-3-flash'
+    provider: openai
+    model: 'gemini-3-flash'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gemini-3.5-flash'
+    provider: openai
+    model: 'gemini-3.5-flash'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-sonnet-4'
+    provider: openai
+    model: 'claude-sonnet-4'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5-mini'
+    provider: openai
+    model: 'gpt-5-mini'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gemini-2.5-flash'
+    provider: openai
+    model: 'gemini-2.5-flash'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor kimi-k3'
+    provider: openai
+    model: 'kimi-k3'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor kimi-k2.7-code'
+    provider: openai
+    model: 'kimi-k2.7-code'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor glm-5.2'
+    provider: openai
+    model: 'glm-5.2'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor default:ask'
+    provider: openai
+    model: 'default:ask'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor default:plan'
+    provider: openai
+    model: 'default:plan'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor default:agent'
+    provider: openai
+    model: 'default:agent'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor grok-4.6:ask'
+    provider: openai
+    model: 'grok-4.6:ask'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor grok-4.6:plan'
+    provider: openai
+    model: 'grok-4.6:plan'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor grok-4.6:agent'
+    provider: openai
+    model: 'grok-4.6:agent'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor composer-2.5:ask'
+    provider: openai
+    model: 'composer-2.5:ask'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor composer-2.5:plan'
+    provider: openai
+    model: 'composer-2.5:plan'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor composer-2.5:agent'
+    provider: openai
+    model: 'composer-2.5:agent'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-opus-5:ask'
+    provider: openai
+    model: 'claude-opus-5:ask'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-opus-5:plan'
+    provider: openai
+    model: 'claude-opus-5:plan'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-opus-5:agent'
+    provider: openai
+    model: 'claude-opus-5:agent'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-opus-4-8:ask'
+    provider: openai
+    model: 'claude-opus-4-8:ask'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-opus-4-8:plan'
+    provider: openai
+    model: 'claude-opus-4-8:plan'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-opus-4-8:agent'
+    provider: openai
+    model: 'claude-opus-4-8:agent'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5.6-sol:ask'
+    provider: openai
+    model: 'gpt-5.6-sol:ask'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5.6-sol:plan'
+    provider: openai
+    model: 'gpt-5.6-sol:plan'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5.6-sol:agent'
+    provider: openai
+    model: 'gpt-5.6-sol:agent'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5.5:ask'
+    provider: openai
+    model: 'gpt-5.5:ask'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5.5:plan'
+    provider: openai
+    model: 'gpt-5.5:plan'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5.5:agent'
+    provider: openai
+    model: 'gpt-5.5:agent'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-fable-5-1:ask'
+    provider: openai
+    model: 'claude-fable-5-1:ask'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-fable-5-1:plan'
+    provider: openai
+    model: 'claude-fable-5-1:plan'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-fable-5-1:agent'
+    provider: openai
+    model: 'claude-fable-5-1:agent'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-fable-5:ask'
+    provider: openai
+    model: 'claude-fable-5:ask'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-fable-5:plan'
+    provider: openai
+    model: 'claude-fable-5:plan'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-fable-5:agent'
+    provider: openai
+    model: 'claude-fable-5:agent'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor grok-4.5:ask'
+    provider: openai
+    model: 'grok-4.5:ask'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor grok-4.5:plan'
+    provider: openai
+    model: 'grok-4.5:plan'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor grok-4.5:agent'
+    provider: openai
+    model: 'grok-4.5:agent'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gemini-3.8-flash:ask'
+    provider: openai
+    model: 'gemini-3.8-flash:ask'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gemini-3.8-flash:plan'
+    provider: openai
+    model: 'gemini-3.8-flash:plan'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gemini-3.8-flash:agent'
+    provider: openai
+    model: 'gemini-3.8-flash:agent'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gemini-3.7-flash:ask'
+    provider: openai
+    model: 'gemini-3.7-flash:ask'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gemini-3.7-flash:plan'
+    provider: openai
+    model: 'gemini-3.7-flash:plan'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gemini-3.7-flash:agent'
+    provider: openai
+    model: 'gemini-3.7-flash:agent'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor muse-spark-1.3:ask'
+    provider: openai
+    model: 'muse-spark-1.3:ask'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor muse-spark-1.3:plan'
+    provider: openai
+    model: 'muse-spark-1.3:plan'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor muse-spark-1.3:agent'
+    provider: openai
+    model: 'muse-spark-1.3:agent'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5.6-terra:ask'
+    provider: openai
+    model: 'gpt-5.6-terra:ask'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5.6-terra:plan'
+    provider: openai
+    model: 'gpt-5.6-terra:plan'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5.6-terra:agent'
+    provider: openai
+    model: 'gpt-5.6-terra:agent'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-sonnet-5:ask'
+    provider: openai
+    model: 'claude-sonnet-5:ask'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-sonnet-5:plan'
+    provider: openai
+    model: 'claude-sonnet-5:plan'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-sonnet-5:agent'
+    provider: openai
+    model: 'claude-sonnet-5:agent'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-sonnet-4-6:ask'
+    provider: openai
+    model: 'claude-sonnet-4-6:ask'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-sonnet-4-6:plan'
+    provider: openai
+    model: 'claude-sonnet-4-6:plan'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-sonnet-4-6:agent'
+    provider: openai
+    model: 'claude-sonnet-4-6:agent'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor composer-2:ask'
+    provider: openai
+    model: 'composer-2:ask'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor composer-2:plan'
+    provider: openai
+    model: 'composer-2:plan'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor composer-2:agent'
+    provider: openai
+    model: 'composer-2:agent'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5.3-codex:ask'
+    provider: openai
+    model: 'gpt-5.3-codex:ask'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5.3-codex:plan'
+    provider: openai
+    model: 'gpt-5.3-codex:plan'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5.3-codex:agent'
+    provider: openai
+    model: 'gpt-5.3-codex:agent'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-opus-4-7:ask'
+    provider: openai
+    model: 'claude-opus-4-7:ask'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-opus-4-7:plan'
+    provider: openai
+    model: 'claude-opus-4-7:plan'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-opus-4-7:agent'
+    provider: openai
+    model: 'claude-opus-4-7:agent'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5.4:ask'
+    provider: openai
+    model: 'gpt-5.4:ask'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5.4:plan'
+    provider: openai
+    model: 'gpt-5.4:plan'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5.4:agent'
+    provider: openai
+    model: 'gpt-5.4:agent'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-opus-4-6:ask'
+    provider: openai
+    model: 'claude-opus-4-6:ask'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-opus-4-6:plan'
+    provider: openai
+    model: 'claude-opus-4-6:plan'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-opus-4-6:agent'
+    provider: openai
+    model: 'claude-opus-4-6:agent'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-opus-4-5:ask'
+    provider: openai
+    model: 'claude-opus-4-5:ask'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-opus-4-5:plan'
+    provider: openai
+    model: 'claude-opus-4-5:plan'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-opus-4-5:agent'
+    provider: openai
+    model: 'claude-opus-4-5:agent'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5.2:ask'
+    provider: openai
+    model: 'gpt-5.2:ask'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5.2:plan'
+    provider: openai
+    model: 'gpt-5.2:plan'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5.2:agent'
+    provider: openai
+    model: 'gpt-5.2:agent'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5.6-luna:ask'
+    provider: openai
+    model: 'gpt-5.6-luna:ask'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5.6-luna:plan'
+    provider: openai
+    model: 'gpt-5.6-luna:plan'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5.6-luna:agent'
+    provider: openai
+    model: 'gpt-5.6-luna:agent'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gemini-3.6-flash:ask'
+    provider: openai
+    model: 'gemini-3.6-flash:ask'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gemini-3.6-flash:plan'
+    provider: openai
+    model: 'gemini-3.6-flash:plan'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gemini-3.6-flash:agent'
+    provider: openai
+    model: 'gemini-3.6-flash:agent'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gemini-3.1-pro:ask'
+    provider: openai
+    model: 'gemini-3.1-pro:ask'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gemini-3.1-pro:plan'
+    provider: openai
+    model: 'gemini-3.1-pro:plan'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gemini-3.1-pro:agent'
+    provider: openai
+    model: 'gemini-3.1-pro:agent'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5.4-mini:ask'
+    provider: openai
+    model: 'gpt-5.4-mini:ask'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5.4-mini:plan'
+    provider: openai
+    model: 'gpt-5.4-mini:plan'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5.4-mini:agent'
+    provider: openai
+    model: 'gpt-5.4-mini:agent'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5.4-nano:ask'
+    provider: openai
+    model: 'gpt-5.4-nano:ask'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5.4-nano:plan'
+    provider: openai
+    model: 'gpt-5.4-nano:plan'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5.4-nano:agent'
+    provider: openai
+    model: 'gpt-5.4-nano:agent'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-haiku-4-5:ask'
+    provider: openai
+    model: 'claude-haiku-4-5:ask'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-haiku-4-5:plan'
+    provider: openai
+    model: 'claude-haiku-4-5:plan'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-haiku-4-5:agent'
+    provider: openai
+    model: 'claude-haiku-4-5:agent'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-sonnet-4-5:ask'
+    provider: openai
+    model: 'claude-sonnet-4-5:ask'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-sonnet-4-5:plan'
+    provider: openai
+    model: 'claude-sonnet-4-5:plan'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-sonnet-4-5:agent'
+    provider: openai
+    model: 'claude-sonnet-4-5:agent'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5.1:ask'
+    provider: openai
+    model: 'gpt-5.1:ask'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5.1:plan'
+    provider: openai
+    model: 'gpt-5.1:plan'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5.1:agent'
+    provider: openai
+    model: 'gpt-5.1:agent'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gemini-3-flash:ask'
+    provider: openai
+    model: 'gemini-3-flash:ask'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gemini-3-flash:plan'
+    provider: openai
+    model: 'gemini-3-flash:plan'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gemini-3-flash:agent'
+    provider: openai
+    model: 'gemini-3-flash:agent'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gemini-3.5-flash:ask'
+    provider: openai
+    model: 'gemini-3.5-flash:ask'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gemini-3.5-flash:plan'
+    provider: openai
+    model: 'gemini-3.5-flash:plan'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gemini-3.5-flash:agent'
+    provider: openai
+    model: 'gemini-3.5-flash:agent'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-sonnet-4:ask'
+    provider: openai
+    model: 'claude-sonnet-4:ask'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-sonnet-4:plan'
+    provider: openai
+    model: 'claude-sonnet-4:plan'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor claude-sonnet-4:agent'
+    provider: openai
+    model: 'claude-sonnet-4:agent'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5-mini:ask'
+    provider: openai
+    model: 'gpt-5-mini:ask'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5-mini:plan'
+    provider: openai
+    model: 'gpt-5-mini:plan'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gpt-5-mini:agent'
+    provider: openai
+    model: 'gpt-5-mini:agent'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gemini-2.5-flash:ask'
+    provider: openai
+    model: 'gemini-2.5-flash:ask'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gemini-2.5-flash:plan'
+    provider: openai
+    model: 'gemini-2.5-flash:plan'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor gemini-2.5-flash:agent'
+    provider: openai
+    model: 'gemini-2.5-flash:agent'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor kimi-k3:ask'
+    provider: openai
+    model: 'kimi-k3:ask'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor kimi-k3:plan'
+    provider: openai
+    model: 'kimi-k3:plan'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor kimi-k3:agent'
+    provider: openai
+    model: 'kimi-k3:agent'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor kimi-k2.7-code:ask'
+    provider: openai
+    model: 'kimi-k2.7-code:ask'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor kimi-k2.7-code:plan'
+    provider: openai
+    model: 'kimi-k2.7-code:plan'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor kimi-k2.7-code:agent'
+    provider: openai
+    model: 'kimi-k2.7-code:agent'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor glm-5.2:ask'
+    provider: openai
+    model: 'glm-5.2:ask'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor glm-5.2:plan'
+    provider: openai
+    model: 'glm-5.2:plan'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+  - name: 'Cursor glm-5.2:agent'
+    provider: openai
+    model: 'glm-5.2:agent'
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: continue-local
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions:
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell

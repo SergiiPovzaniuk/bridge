@@ -8,10 +8,12 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 import com.openaiapi.config.RelayProperties;
 import jakarta.annotation.PreDestroy;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,9 +37,9 @@ public class RelayBrowserSession {
         t.setDaemon(true);
         return t;
     });
-    private final Map<String, String[]> chunkBuffers = new ConcurrentHashMap<>();
     private final AtomicBoolean ready = new AtomicBoolean(false);
     private final AtomicBoolean pokeInFlight = new AtomicBoolean(false);
+    private int pokeFailures;
     // Must be single-threaded FIFO: a poll response can batch several frames for the
     // same stream, and a concurrent/unordered executor here would let their delta
     // chunks race and interleave before reaching the SSE writer, corrupting output.
@@ -79,16 +81,27 @@ public class RelayBrowserSession {
             // Chromium's own OS-level sandbox can fail to initialize under restricted
             // accounts (locked-down remote machines, IDE-launched JVMs, RDP sessions,
             // no writable /dev/shm) -- disable it rather than let launch() throw.
-            browser = playwright.chromium().launch(new BrowserType.LaunchOptions()
+            BrowserType.LaunchOptions launchOptions = new BrowserType.LaunchOptions()
                     .setHeadless(props.isHeadless())
-                    .setArgs(java.util.List.of("--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage")));
+                    .setArgs(java.util.List.of("--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage"));
+            if (props.getBrowserExecutablePath() != null && !props.getBrowserExecutablePath().isBlank()) {
+                Path executable = Path.of(props.getBrowserExecutablePath()).toAbsolutePath();
+                if (!Files.isRegularFile(executable)) {
+                    throw new IllegalArgumentException("Browser executable not found: " + executable);
+                }
+                launchOptions.setExecutablePath(executable);
+            }
+            browser = playwright.chromium().launch(launchOptions);
             openPage();
         } catch (Exception e) {
+            ready.set(false);
+            if (channel != null) channel.failAll("failed to launch relay browser");
             log.error("failed to launch relay browser", e);
         }
     }
 
     private void openPage() {
+        ready.set(false);
         String connId = java.util.UUID.randomUUID().toString();
         page = browser.newPage();
         page.exposeBinding("javaPush", (source, args) -> {
@@ -100,43 +113,27 @@ public class RelayBrowserSession {
                 "window.__cursorToken = " + mapper.valueToTree(props.getRelayToken()).toString() + ";"
                         + "window.__cursorConnId = " + mapper.valueToTree(connId).toString() + ";");
         page.navigate(props.getBridgeUrl());
-        ready.set(true);
-        log.info("relay browser page ready at {} (conn {})", props.getBridgeUrl(), connId);
+        log.info("relay browser page loaded at {} (conn {})", props.getBridgeUrl(), connId);
     }
 
     private void onInboundRaw(String raw) {
         try {
             JsonNode frame = mapper.readTree(raw);
-            if ("__chunk".equals(frame.path("k").asText())) {
-                frame = reassemble(frame);
-                if (frame == null) {
-                    return;
+            String kind = frame.path("k").asText();
+            if ("hello".equals(kind)) {
+                if (ready.compareAndSet(false, true)) {
+                    log.info("relay browser connected to host");
                 }
+                return;
+            }
+            if ("status".equals(kind)) {
+                ready.set(frame.path("ready").asBoolean(false));
+                return;
             }
             channel.onFrame(frame);
         } catch (Exception e) {
             log.warn("failed to parse inbound relay frame", e);
         }
-    }
-
-    private JsonNode reassemble(JsonNode chunkFrame) throws Exception {
-        String id = chunkFrame.path("id").asText();
-        int i = chunkFrame.path("i").asInt();
-        int n = chunkFrame.path("n").asInt();
-        String data = chunkFrame.path("data").asText();
-        String[] parts = chunkBuffers.computeIfAbsent(id, k -> new String[n]);
-        parts[i] = data;
-        for (String p : parts) {
-            if (p == null) {
-                return null;
-            }
-        }
-        chunkBuffers.remove(id);
-        StringBuilder sb = new StringBuilder();
-        for (String p : parts) {
-            sb.append(p);
-        }
-        return mapper.readTree(sb.toString());
     }
 
     /** Sends one JSON frame into the page; safe to call from any thread. */
@@ -146,9 +143,13 @@ public class RelayBrowserSession {
                 if (page != null && !page.isClosed()) {
                     page.evaluate("(s) => window.__cursorTx(s)", json);
                 } else {
+                    ready.set(false);
+                    if (channel != null) channel.failAll("relay page is closed");
                     log.warn("page is null or closed, dropping frame");
                 }
             } catch (Exception e) {
+                ready.set(false);
+                if (channel != null) channel.failAll("failed to send through relay page");
                 log.warn("failed to push frame into relay page: {}", e.getMessage(), e);
             }
         });
@@ -165,8 +166,12 @@ public class RelayBrowserSession {
             try {
                 if (page != null && !page.isClosed()) {
                     page.evaluate("1");
+                    pokeFailures = 0;
                 }
             } catch (Exception ignored) {
+                if (++pokeFailures >= 3) {
+                    ready.set(false);
+                }
             } finally {
                 pokeInFlight.set(false);
             }
@@ -182,6 +187,7 @@ public class RelayBrowserSession {
                 return;
             }
             ready.set(false);
+            if (channel != null) channel.failAll("relay browser reconnected");
             if (browserDead) {
                 log.warn("relay browser disconnected, relaunching from scratch");
                 closeQuietly();
@@ -217,14 +223,13 @@ public class RelayBrowserSession {
 
     @PreDestroy
     public void stop() {
-        pwThread.submit(() -> {
-            try {
-                if (browser != null) browser.close();
-                if (playwright != null) playwright.close();
-            } catch (Exception ignored) {
-            }
-        });
-        pwThread.shutdown();
-        dispatch.shutdown();
+        ready.set(false);
+        if (channel != null) channel.failAll("relay is shutting down");
+        try {
+            pwThread.submit(this::closeQuietly).get(5, TimeUnit.SECONDS);
+        } catch (Exception ignored) {
+        }
+        pwThread.shutdownNow();
+        dispatch.shutdownNow();
     }
 }

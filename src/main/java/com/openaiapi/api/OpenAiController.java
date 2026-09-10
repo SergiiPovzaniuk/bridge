@@ -12,8 +12,8 @@ import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,7 +44,7 @@ public class OpenAiController {
     @GetMapping({"/v1/models", "/models"})
     public void listModels(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         requireBearer(req);
-        BlockingQueue<Object> q = new ArrayBlockingQueue<>(1);
+        BlockingQueue<Object> q = new LinkedBlockingQueue<>();
         channel.requestModels(frame -> q.add(frame));
         JsonNode frame = (JsonNode) await(q, props.getResponseTimeoutMs());
         if (frame == null || frame.has("err")) {
@@ -56,7 +56,7 @@ public class OpenAiController {
     @GetMapping({"/v1/models/{id}", "/models/{id}"})
     public void getModel(@PathVariable String id, HttpServletRequest req, HttpServletResponse resp) throws IOException {
         requireBearer(req);
-        BlockingQueue<Object> q = new ArrayBlockingQueue<>(1);
+        BlockingQueue<Object> q = new LinkedBlockingQueue<>();
         channel.requestModels(frame -> q.add(frame));
         JsonNode frame = (JsonNode) await(q, props.getResponseTimeoutMs());
         if (frame == null || frame.has("err")) {
@@ -87,8 +87,12 @@ public class OpenAiController {
     public void chatCompletions(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         requireBearer(req);
         JsonNode body = mapper.readTree(req.getInputStream());
+        if (body == null || !body.isObject()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "invalid JSON body");
+        }
         boolean wantStream = body.path("stream").asBoolean(false);
         Map<String, String> headers = forwardedHeaders(req);
+        requireRemoteContext(body, headers);
 
         if (wantStream) {
             streamCompletion(body, headers, resp);
@@ -105,7 +109,7 @@ public class OpenAiController {
         resp.setHeader("X-Accel-Buffering", "no");
         Writer writer = resp.getWriter();
 
-        BlockingQueue<Object> q = new ArrayBlockingQueue<>(256);
+        BlockingQueue<Object> q = new LinkedBlockingQueue<>();
         String sid = channel.openStream(frame -> {
             q.add(frame);
             if ("end".equals(frame.path("k").asText())) {
@@ -116,7 +120,17 @@ public class OpenAiController {
         try {
             while (true) {
                 Object item = await(q, props.getResponseTimeoutMs());
-                if (item == null || item == POISON) {
+                if (item == null) {
+                    channel.cancel(sid);
+                    writeSseError(writer, mapper.createObjectNode()
+                            .put("message", "relay response timed out")
+                            .put("type", "server_error")
+                            .put("code", "relay_timeout"));
+                    writer.write("data: [DONE]\n\n");
+                    writer.flush();
+                    break;
+                }
+                if (item == POISON) {
                     break;
                 }
                 JsonNode frame = (JsonNode) item;
@@ -141,7 +155,7 @@ public class OpenAiController {
     }
 
     private void nonStreamCompletion(JsonNode body, Map<String, String> headers, HttpServletResponse resp) throws IOException {
-        BlockingQueue<Object> q = new ArrayBlockingQueue<>(256);
+        BlockingQueue<Object> q = new LinkedBlockingQueue<>();
         String sid = channel.openStream(frame -> {
             q.add(frame);
             if ("end".equals(frame.path("k").asText())) {
@@ -154,7 +168,11 @@ public class OpenAiController {
         try {
             while (true) {
                 Object item = await(q, props.getResponseTimeoutMs());
-                if (item == null || item == POISON) {
+                if (item == null) {
+                    channel.cancel(sid);
+                    break;
+                }
+                if (item == POISON) {
                     break;
                 }
                 JsonNode frame = (JsonNode) item;
@@ -208,6 +226,17 @@ public class OpenAiController {
             }
         }
         return out;
+    }
+
+    void requireRemoteContext(JsonNode body, Map<String, String> headers) {
+        if (!body.path("tools").isArray() || body.path("tools").isEmpty()) {
+            return;
+        }
+        for (String header : new String[]{"x-continue-workspace", "x-continue-os", "x-continue-shell"}) {
+            if (headers.getOrDefault(header, "").isBlank()) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, header + " is required when tools are enabled");
+            }
+        }
     }
 
     private ResponseStatusException notImplemented(String message) {

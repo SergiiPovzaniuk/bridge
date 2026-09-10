@@ -8,12 +8,15 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /** Multiplexes many concurrent chat streams over the single browser-relay WebSocket. */
 @Component
 public class RelayChannel {
 
+    private static final Logger log = LoggerFactory.getLogger(RelayChannel.class);
     private final RelayBrowserSession session;
     private final ObjectMapper mapper = new ObjectMapper();
     private final Map<String, Consumer<JsonNode>> streams = new ConcurrentHashMap<>();
@@ -77,15 +80,45 @@ public class RelayChannel {
         }
         Consumer<JsonNode> c = streams.get(sid);
         if (c != null) {
-            c.accept(frame);
+            try {
+                c.accept(frame);
+            } catch (RuntimeException e) {
+                streams.remove(sid);
+                log.warn("relay stream consumer failed for {}", sid, e);
+            }
         }
     }
 
+    void failAll(String message) {
+        streams.keySet().forEach(sid -> fail(sid, message));
+    }
+
     private void emit(ObjectNode frame) {
+        if (!session.isReady()) {
+            fail(frame.path("sid").asText(), "relay browser is not connected");
+            return;
+        }
         try {
             session.send(mapper.writeValueAsString(frame));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void fail(String sid, String message) {
+        Consumer<JsonNode> consumer = streams.remove(sid);
+        if (consumer == null) {
+            return;
+        }
+        ObjectNode frame = mapper.createObjectNode();
+        frame.put("k", "end");
+        frame.put("sid", sid);
+        frame.put("reason", "error");
+        frame.set("err", mapper.createObjectNode()
+                .put("message", message)
+                .put("type", "server_error")
+                .put("code", "relay_unavailable")
+                .put("status", 503));
+        consumer.accept(frame);
     }
 }

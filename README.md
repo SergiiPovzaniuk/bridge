@@ -19,20 +19,18 @@ VS Code Continue  --OpenAI SSE-->  open_ai_api :18080  --page.evaluate-->  Chrom
 Continue's own agent loop executes `tool_calls` locally, so files mutate on
 **this** (remote) machine natively, with Continue's normal diff/approval UI.
 
-## 1. Install Chromium (Playwright) on the remote PC
+## 1. Configure an installed Chromium browser
 
 ```bash
 cd open_ai_api
 ./mvnw -q -DskipTests package
-# One-time browser install (downloads ~140MB Chromium only, not Firefox/WebKit):
-mvn -q exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install chromium"
+set BROWSER_EXECUTABLE_PATH=C:\Program Files\Google\Chrome\Application\chrome.exe
 ```
 
-If you hit `Timed out waiting for browsers to install` because the driver
-tries to fetch all three engines, either retry (already-downloaded browsers
-are skipped) or set `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1` once Chromium is
-present under `%LOCALAPPDATA%\ms-playwright` (Windows) / `~/.cache/ms-playwright`
-(Linux/macOS) so startup never re-checks the other engines.
+The application always sets `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1`. It never
+downloads a browser automatically. Set `BROWSER_EXECUTABLE_PATH` to an existing
+Chrome, Chromium, Edge, or compatible executable. `PLAYWRIGHT_BROWSERS_PATH`
+remains available for an existing Playwright browser cache.
 
 ## 2. Run it
 
@@ -46,6 +44,7 @@ Set `RELAY_TOKEN` to the host's token before starting. The jar sets `PLAYWRIGHT_
 set BRIDGE_URL=http://<your-main-pc-ip>:8787/
 set RELAY_TOKEN=<same value as the host's RELAY_TOKEN>
 set BEARER_TOKEN=<token Continue will send>
+set BROWSER_EXECUTABLE_PATH=C:\Program Files\Google\Chrome\Application\chrome.exe
 java -jar target\open-ai-api-0.0.1-SNAPSHOT.jar
 ```
 
@@ -55,10 +54,11 @@ Or via `application.yml` / any Spring env source — see `app.relay.*` in
 | Property | Env var | Default | Purpose |
 |---|---|---|---|
 | `app.relay.bridge-url` | `BRIDGE_URL` | `http://127.0.0.1:8787/` | URL of the Python host's robot page |
-| `app.relay.relay-token` | `RELAY_TOKEN` | empty | Shared secret for the `/relay` WebSocket (must match host `.env`) |
+| `app.relay.relay-token` | `RELAY_TOKEN` | required | Shared secret for `/relay` HTTP transport (must match host `.env`) |
 | `app.relay.bearer-token` | `BEARER_TOKEN` | `continue-local` | Token Continue must send as `Authorization: Bearer ...` |
-| `app.relay.headless` | `RELAY_HEADLESS` | `true` | Run Chromium headless |
+| `app.relay.headless` | `RELAY_HEADLESS` | `false` | Run Chromium headless |
 | `app.relay.browsers-path` | `PLAYWRIGHT_BROWSERS_PATH` | system default | Custom Playwright browser cache dir |
+| `app.relay.browser-executable-path` | `BROWSER_EXECUTABLE_PATH` | empty | Existing browser executable; no download is attempted |
 | `app.relay.response-timeout-ms` | — | `300000` | Max wait for a single relay round trip |
 
 The relay listens on `127.0.0.1:18080` by default (`server.address` /
@@ -67,6 +67,10 @@ Bind `0.0.0.0` only if Continue runs on a different machine than this relay,
 and put it behind TLS + a firewall allowlist in that case (see below).
 
 ## 3. Point VS Code Continue at it
+
+Copy [`continue-config.yaml`](continue-config.yaml) to `%USERPROFILE%\.continue\config.yaml`,
+replace `C:\path\to\remote\workspace`, and set `apiKey` to your `BEARER_TOKEN`.
+It contains every model and `:ask`, `:plan`, and `:agent` variant exposed by `/v1/models`.
 
 `config.yaml` (new Continue config format):
 
@@ -133,17 +137,3 @@ or another provider you already use).
 | GET | `/v1/models`, `/v1/models/{id}` | Relayed from the host's model cache |
 | POST | `/v1/chat/completions` | Stream + non-stream, tool calls, all 3 modes |
 | POST | `/v1/embeddings`, `/v1/completions` | `501 not_implemented` (see above) |
-
-## Decommissioning the old stack
-
-This replaces **both**:
-
-- `open_ai_cursor_api` (Node/Hono, ACP-over-stdio, AES-sealed `/ui/run`) — no
-  longer needed; the Python `cursor_openai_bridge` host replaces it entirely
-  and talks to Cursor directly via `cursor-sdk`, no subprocess CLI involved.
-- The old `data-testid`-driven robot page and DOM-polling `RelayBrowserSession`
-  — replaced by `cursor_openai_bridge/static/robot.html`, a zero-DOM-state
-  HTTP relay pushed to Java via `page.exposeBinding`.
-
-Once the new stack is verified end-to-end, stop `open_ai_cursor_api` and
-remove its scheduled tasks/services; nothing in this repo calls it anymore.
