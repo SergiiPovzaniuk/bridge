@@ -1,0 +1,13 @@
+{
+  "servers": {
+    "fixtureBrowser": {
+      "type": "stdio",
+      "command": "uv",
+      "args": [
+        "run",
+        "--script",
+        "${workspaceFolder}/.vscode/copilot_browser_fixture.py"
+      ]
+    }
+  }
+}

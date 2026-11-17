@@ -1,0 +1,52 @@
+name: ChatGPT Subscription Bridge
+version: 1.0.0
+schema: v1
+models:
+  - name: GPT-6.2 Astra - ChatGPT subscription
+    provider: openai
+    useResponsesApi: false
+    model: codex/gpt-6.2-astra
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: replace-with-java-BEARER_TOKEN
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions: &subscriptionOptions
+      timeout: 300000
+      headers:
+        X-Continue-Workspace: 'C:\path\to\remote\workspace'
+        X-Continue-OS: windows
+        X-Continue-Shell: powershell
+      # Continue supplies sampling/token defaults; Codex controls these itself.
+      extraBodyProperties:
+        temperature: null
+        top_p: null
+        max_tokens: null
+        max_completion_tokens: null
+        stop: null
+        seed: null
+  - name: GPT-6 Astra - ChatGPT subscription
+    provider: openai
+    useResponsesApi: false
+    model: codex/gpt-6-astra
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: replace-with-java-BEARER_TOKEN
+    roles: [chat, edit, apply]
+    capabilities: [tool_use]
+    requestOptions: *subscriptionOptions
+  - name: ChatGPT subscription - Plan
+    provider: openai
+    useResponsesApi: false
+    model: codex/default:plan
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: replace-with-java-BEARER_TOKEN
+    roles: [chat]
+    capabilities: [tool_use]
+    requestOptions: *subscriptionOptions
+  - name: ChatGPT subscription - Ask
+    provider: openai
+    useResponsesApi: false
+    model: codex/default:ask
+    apiBase: http://127.0.0.1:18080/v1
+    apiKey: replace-with-java-BEARER_TOKEN
+    roles: [chat]
+    requestOptions: *subscriptionOptions

@@ -53,9 +53,13 @@ public class OpenAiController {
         writeJson(resp, mapper.createObjectNode().put("object", "list").set("data", frame.get("data")));
     }
 
-    @GetMapping({"/v1/models/{id}", "/models/{id}"})
+    @GetMapping({"/v1/models/{*id}", "/models/{*id}"})
     public void getModel(@PathVariable String id, HttpServletRequest req, HttpServletResponse resp) throws IOException {
         requireBearer(req);
+        // Spring's catch-all variable includes the leading path separator.
+        if (id.startsWith("/")) {
+            id = id.substring(1);
+        }
         BlockingQueue<Object> q = new LinkedBlockingQueue<>();
         channel.requestModels(frame -> q.add(frame));
         JsonNode frame = (JsonNode) await(q, props.getResponseTimeoutMs());
@@ -107,7 +111,7 @@ public class OpenAiController {
         resp.setContentType("text/event-stream");
         resp.setHeader("Cache-Control", "no-cache");
         resp.setHeader("X-Accel-Buffering", "no");
-        Writer writer = resp.getWriter();
+        var writer = resp.getWriter();
 
         BlockingQueue<Object> q = new LinkedBlockingQueue<>();
         String sid = channel.openStream(frame -> {
@@ -122,10 +126,16 @@ public class OpenAiController {
                 Object item = await(q, props.getResponseTimeoutMs());
                 if (item == null) {
                     channel.cancel(sid);
-                    writeSseError(writer, mapper.createObjectNode()
+                    var timeout = mapper.createObjectNode()
                             .put("message", "relay response timed out")
                             .put("type", "server_error")
-                            .put("code", "relay_timeout"));
+                            .put("status", 504)
+                            .put("code", "relay_timeout");
+                    if (!resp.isCommitted()) {
+                        writeError(resp, timeout);
+                        return;
+                    }
+                    writeSseError(writer, timeout);
                     writer.write("data: [DONE]\n\n");
                     writer.flush();
                     break;
@@ -137,9 +147,16 @@ public class OpenAiController {
                 String kind = frame.path("k").asText();
                 if ("d".equals(kind)) {
                     writer.write("data: " + mapper.writeValueAsString(frame.get("data")) + "\n\n");
-                    writer.flush();
+                    if (writer.checkError()) {
+                        channel.cancel(sid);
+                        return;
+                    }
                 } else if ("end".equals(kind)) {
                     if ("error".equals(frame.path("reason").asText())) {
+                        if (!resp.isCommitted()) {
+                            writeError(resp, frame.path("err"));
+                            return;
+                        }
                         writeSseError(writer, frame.path("err"));
                     }
                     writer.write("data: [DONE]\n\n");
@@ -170,7 +187,7 @@ public class OpenAiController {
                 Object item = await(q, props.getResponseTimeoutMs());
                 if (item == null) {
                     channel.cancel(sid);
-                    break;
+                    throw new ResponseStatusException(HttpStatus.GATEWAY_TIMEOUT, "relay response timed out");
                 }
                 if (item == POISON) {
                     break;
@@ -229,6 +246,7 @@ public class OpenAiController {
     }
 
     void requireRemoteContext(JsonNode body, Map<String, String> headers) {
+        if (body.path("model").asText("").startsWith("codex/")) return;
         if (!body.path("tools").isArray() || body.path("tools").isEmpty()) {
             return;
         }
@@ -248,8 +266,12 @@ public class OpenAiController {
             return;
         }
         String auth = req.getHeader("Authorization");
-        if (!("Bearer " + props.getBearerToken()).equals(auth)) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "invalid API key");
+        if (auth == null || !auth.regionMatches(true, 0, "Bearer ", 0, 7)) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Send the local relay key using Authorization: Bearer");
+        }
+        if (!java.security.MessageDigest.isEqual(auth.substring(7).getBytes(StandardCharsets.UTF_8),
+                props.getBearerToken().getBytes(StandardCharsets.UTF_8))) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "The bearer key does not match this local relay");
         }
     }
 

@@ -17,8 +17,8 @@ public class ApiExceptionHandler {
 
     private static final Logger log = LoggerFactory.getLogger(ApiExceptionHandler.class);
 
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<Map<String, Object>> badJson(HttpMessageNotReadableException ex) {
+    @ExceptionHandler({HttpMessageNotReadableException.class, com.fasterxml.jackson.core.JsonProcessingException.class})
+    public ResponseEntity<Map<String, Object>> badJson() {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error("invalid_request_error", "Invalid JSON request body", null));
     }
 
@@ -40,7 +40,7 @@ public class ApiExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> other(Exception ex) {
-        log.error("Unhandled error", ex);
+        log.error("Unhandled error ({})", ex.getClass().getSimpleName());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error("server_error", "internal error", null));
     }
 

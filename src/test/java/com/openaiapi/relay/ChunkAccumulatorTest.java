@@ -74,6 +74,16 @@ class ChunkAccumulatorTest {
     }
 
     @Test
+    void preservesTextAlongsideToolCalls() throws Exception {
+        ChunkAccumulator acc = new ChunkAccumulator(mapper);
+        acc.add(chunk("Reading the file.", null));
+        acc.add(mapper.readTree("{\"choices\":[{\"delta\":{\"tool_calls\":[{\"index\":0,\"id\":\"call-1\",\"type\":\"function\",\"function\":{\"name\":\"read_file\",\"arguments\":\"{}\"}}]},\"finish_reason\":\"tool_calls\"}]}"));
+        JsonNode message = acc.build().path("choices").path(0).path("message");
+        assertEquals("Reading the file.", message.path("content").asText());
+        assertEquals(1, message.path("tool_calls").size());
+    }
+
+    @Test
     void mergesFragmentedParallelToolCalls() {
         ChunkAccumulator acc = new ChunkAccumulator(mapper);
         ObjectNode first = chunk(null, null);

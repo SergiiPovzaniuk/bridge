@@ -1,10 +1,15 @@
 # Java relay (thin, dumb byte relay)
 
+For the GPT-6.2 Astra subscription model, follow the [Copilot setup guide](COPILOT.md) or use the [Continue subscription configuration](continue-subscription.yaml).
+The browser transport, `BRIDGE_URL`, and relay token are the same for both providers.
+
 Spring Boot app for the **remote PC**. Exposes a real OpenAI-compatible API to
-VS Code Continue, and gets all model output from a visible Chromium tab that
+VS Code Copilot and Continue, and gets all model output from a visible Chromium tab that
 uses HTTP long-polling with the Python host (`cursor_openai_bridge`) on
 your main PC. This app has **zero protocol knowledge** — it forwards JSON
 frames both ways and never touches the DOM.
+
+Windows installation and startup: [REMOTE_SETUP.md](REMOTE_SETUP.md).
 
 ```
 VS Code Continue  --local OpenAI HTTP-->  open_ai_api :18080  --page.evaluate-->  Chromium
@@ -71,6 +76,13 @@ and put it behind TLS + a firewall allowlist in that case (see below).
 Copy [`continue-config.yaml`](continue-config.yaml) to `%USERPROFILE%\.continue\config.yaml`,
 replace `C:\path\to\remote\workspace`, and set `apiKey` to your `BEARER_TOKEN`.
 It contains every model and `:ask`, `:plan`, and `:agent` variant exposed by `/v1/models`.
+
+For ChatGPT subscription models, merge [`continue-subscription.yaml`](continue-subscription.yaml)
+instead. Keep `useResponsesApi: false`: Continue 2.1.0 automatically routes GPT-6
+to `/v1/responses` otherwise, producing a 404. The relay implements Chat Completions
+at `/v1/chat/completions`. The subscription sample also clears incompatible sampling
+defaults. Select the subscription model in Continue's **Agent** mode to edit files
+in the client workspace; the model host never performs those file operations.
 
 `config.yaml` (new Continue config format):
 

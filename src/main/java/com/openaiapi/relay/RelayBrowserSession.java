@@ -21,7 +21,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 /**
- * Drives one headless Chromium tab loaded on the Python bridge's robot page.
+ * Drives one Chromium tab loaded on the Python bridge's robot page (visible by default).
  * All Playwright calls are confined to a single dedicated thread; inbound frames
  * arrive via an exposed binding and are handed off to {@link RelayChannel}.
  */
@@ -132,7 +132,7 @@ public class RelayBrowserSession {
             }
             channel.onFrame(frame);
         } catch (Exception e) {
-            log.warn("failed to parse inbound relay frame", e);
+            log.warn("failed to parse inbound relay frame ({})", e.getClass().getSimpleName());
         }
     }
 
@@ -150,7 +150,7 @@ public class RelayBrowserSession {
             } catch (Exception e) {
                 ready.set(false);
                 if (channel != null) channel.failAll("failed to send through relay page");
-                log.warn("failed to push frame into relay page: {}", e.getMessage(), e);
+                log.warn("failed to push frame into relay page ({})", e.getClass().getSimpleName());
             }
         });
     }

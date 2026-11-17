@@ -57,7 +57,11 @@ public class ChunkAccumulator {
         ObjectNode message = mapper.createObjectNode();
         message.put("role", "assistant");
         if (!toolCalls.isEmpty()) {
-            message.putNull("content");
+            if (content.isEmpty()) {
+                message.putNull("content");
+            } else {
+                message.put("content", content.toString());
+            }
             message.set("tool_calls", toolCalls);
         } else {
             message.put("content", content.toString());
