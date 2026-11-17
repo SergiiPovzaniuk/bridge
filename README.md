@@ -9,7 +9,7 @@ uses HTTP long-polling with the Python host (`cursor_openai_bridge`) on
 your main PC. This app has **zero protocol knowledge** — it forwards JSON
 frames both ways and never touches the DOM.
 
-Windows installation and startup: [REMOTE_SETUP.md](REMOTE_SETUP.md).
+The [prebuilt client JAR](dist/open-ai-api-0.0.1-SNAPSHOT.jar) includes its Java dependencies. Follow the [Windows setup guide](REMOTE_SETUP.md#install-the-client) to download it with Git LFS and start the relay.
 
 ```
 VS Code Continue  --local OpenAI HTTP-->  open_ai_api :18080  --page.evaluate-->  Chromium

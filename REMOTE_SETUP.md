@@ -7,7 +7,7 @@ For Copilot Agent mode with GPT-6.2 Astra, use the updated relay JAR and the [Co
 1. Obtain these values from the host-PC operator:
    - Host bridge URL, for example `https://info.iba-expert.uk/`
    - Host `RELAY_TOKEN`
-2. Install Git, JDK 21, VS Code with GitHub Copilot Chat or Continue, and Chrome or Edge.
+2. Install Git with Git LFS, Java 21 or newer, VS Code with GitHub Copilot Chat or Continue, and Chrome or Edge.
 3. Confirm the host is reachable:
 
 ```powershell
@@ -33,13 +33,15 @@ java -version
 
 The major version must be 21 or newer.
 
-3. Build the application:
+3. Download the prebuilt client and copy it into the launcher's directory. Stop any running client before replacing its JAR.
 
 ```powershell
-.\mvnw.cmd clean package
+git lfs pull
+New-Item -ItemType Directory -Force target | Out-Null
+Copy-Item -Force .\dist\open-ai-api-0.0.1-SNAPSHOT.jar .\target\
 ```
 
-This build requires temporary access to Maven Central. If Maven Central is blocked, build on an unrestricted PC and copy `target\open-ai-api-0.0.1-SNAPSHOT.jar` into the same `target` path on the remote PC.
+The published JAR includes its Java dependencies. Chrome or Edge runs separately. To build the JAR from source, use a JDK and run `.\mvnw.cmd clean package`.
 
 4. Create the local configuration:
 
